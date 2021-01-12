@@ -1,0 +1,18 @@
+{
+    "App": {
+        "port": 3000,
+        "database": {
+            "mongoUrl": "mongodb+srv://root:root@cluster0.gu2io.mongodb.net/waldemar?retryWrites=true&w=majority"
+        },
+        "auth": {
+            "key": "some-key",
+            "tokenExpiresIn": "20000000"
+        },
+        "resources": {
+            "StormGlass": {
+                "apiUrl": "https://api.stormglass.io/v2",
+                "apiToken": "do-not-hard-code"
+            }
+        }
+    }
+}
