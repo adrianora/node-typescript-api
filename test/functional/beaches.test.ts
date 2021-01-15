@@ -7,9 +7,9 @@ describe("Beaches functional tests", () => {
 
   describe("When creating a new beach", () => {
     const defaultUser = {
-      name: 'John Doe',
-      email: 'john2@mail.com',
-      password: '1234',
+      name: "John Doe",
+      email: "john2@mail.com",
+      password: "1234",
     };
 
     let token: string;
@@ -28,25 +28,32 @@ describe("Beaches functional tests", () => {
         position: "E",
       };
 
-      const response = await global.testRequest.post("/beaches").set({ 'x-access-token': token }).send(newBeach);
+      const response = await global.testRequest
+        .post("/beaches")
+        .set({ "x-access-token": token })
+        .send(newBeach);
       expect(response.status).toBe(201);
       //Object containing matches the keys and values, even if includes other keys such as id.
       expect(response.body).toEqual(expect.objectContaining(newBeach));
     });
 
-    it("should return 422 when there is a validation error", async () => {
+    it("should return validation error", async () => {
       const newBeach = {
         lat: "invalid_string",
         lng: 151.289824,
         name: "Manly",
         position: "E",
       };
-      const response = await global.testRequest.post("/beaches").set({ 'x-access-token': token }).send(newBeach);
+      const response = await global.testRequest
+        .post("/beaches")
+        .set({ "x-access-token": token })
+        .send(newBeach);
 
-      expect(response.status).toBe(422);
+      expect(response.status).toBe(400);
       expect(response.body).toEqual({
-        error:
-          'Beach validation failed: lat: Cast to Number failed for value "invalid_string" at path "lat"',
+        code: 400,
+        error: "Bad Request",
+        message: "request.body.lat should be number",
       });
     });
 
